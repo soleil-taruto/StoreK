@@ -245,6 +245,7 @@ namespace Charlotte.GameCommons
 		public static void SetRealScreenSize(int w, int h)
 		{
 			DU.StoreImageDataIfLoadedForAllScreen();
+			VScreen.ChangeDrawScreenToBack();
 
 			Picture.UnloadAll();
 			VScreen.UnloadAll();
@@ -259,6 +260,7 @@ namespace Charlotte.GameCommons
 			DX.SetMouseDispFlag(GameSetting.MouseCursorShow ? 1 : 0);
 
 			DU.RestoreImageDataIfStoredForAllScreen();
+			VScreen.ChangeDrawScreenToBack();
 
 			int l = DD.TargetMonitor.L + (DD.TargetMonitor.W - w) / 2;
 			int t = DD.TargetMonitor.T + (DD.TargetMonitor.H - h) / 2;

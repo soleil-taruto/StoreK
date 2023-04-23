@@ -62,6 +62,9 @@ namespace Charlotte.GameCommons
 		{
 			if (this.Handle != -1)
 			{
+				if (CurrentDrawScreen == this)
+					throw new Exception("描画先スクリーンをアンロードしようとした。");
+
 				if (DX.DeleteGraph(this.Handle) != 0) // ? 失敗
 					throw new Exception("DeleteGraph failed");
 
@@ -92,9 +95,16 @@ namespace Charlotte.GameCommons
 
 		public IDisposable Section()
 		{
-			VScreen homeDrawScreen = CurrentDrawScreen;
-			this.ChangeDrawScreenToThis();
-			return SCommon.GetAnonyDisposable(() => ChangeDrawScreenTo(homeDrawScreen));
+			if (CurrentDrawScreen == this)
+			{
+				return SCommon.GetAnonyDisposable(() => { });
+			}
+			else
+			{
+				VScreen homeDrawScreen = CurrentDrawScreen;
+				this.ChangeDrawScreenToThis();
+				return SCommon.GetAnonyDisposable(() => ChangeDrawScreenTo(homeDrawScreen));
+			}
 		}
 
 		private static void ChangeDrawScreenTo(VScreen screen)

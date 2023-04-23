@@ -435,7 +435,6 @@ namespace Charlotte.GameCommons
 					screen.StoredObject = bmpFile;
 				}
 			}
-			DX.SetDrawScreen(DX.DX_SCREEN_BACK);
 		}
 
 		public static void RestoreImageDataIfStoredForAllScreen()
@@ -456,7 +455,6 @@ namespace Charlotte.GameCommons
 					SCommon.DeletePath(bmpFile);
 				}
 			}
-			DX.SetDrawScreen(DX.DX_SCREEN_BACK);
 		}
 
 		public static class KeyboardKeys
