@@ -147,11 +147,11 @@ namespace Charlotte.Games
 			foreach (Input input in Inputs.GetAllInput())
 				input.FreezeInputUntilRelease();
 
+			double frostRate = 0.0;
+
 			for (; ; )
 			{
 				DD.FreezeInput();
-
-				double frostRate = 0.0;
 
 				for (; ; )
 				{

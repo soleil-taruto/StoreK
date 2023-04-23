@@ -85,6 +85,7 @@ namespace Charlotte.Games
 				DD.EachFrame();
 			}
 			TitleMenu.Run();
+			Detach();
 		}
 
 		private static void Touch()
@@ -96,6 +97,15 @@ namespace Charlotte.Games
 			Music.TouchAll();
 			Picture.TouchAll();
 			SoundEffect.TouchAll();
+		}
+
+		private static void Detach() // 解放できるものを解放してみる。これは実行しなくても良い。
+		{
+			Picture.UnloadAll();
+			VScreen.UnloadAll();
+			DU.UnloadAllFontHandle();
+			Music.UnloadAll();
+			SoundEffect.UnloadAll();
 		}
 	}
 }

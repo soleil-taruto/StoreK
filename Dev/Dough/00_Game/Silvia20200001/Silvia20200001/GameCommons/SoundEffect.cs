@@ -43,7 +43,7 @@ namespace Charlotte.GameCommons
 		}
 
 		private List<HandleInfo> Handles; // null == 未ロード
-		private int LastIndex;
+		private int PlayIndex;
 
 		/// <summary>
 		/// リソースから効果音をロードする。
@@ -71,7 +71,7 @@ namespace Charlotte.GameCommons
 
 				this.Handles = new List<HandleInfo>();
 				this.Handles.Add(new HandleInfo(handle));
-				this.LastIndex = 0;
+				this.PlayIndex = 0;
 			}
 		}
 
@@ -122,27 +122,20 @@ namespace Charlotte.GameCommons
 		{
 			this.LoadIfNeeded();
 
-			this.LastIndex++;
-			this.LastIndex %= this.Handles.Count;
+			this.PlayIndex++;
+			this.PlayIndex %= this.Handles.Count;
 
-			if (IsPlaying(this.Handles[this.LastIndex].Value))
+			if (IsPlaying(this.Handles[this.PlayIndex].Value))
 			{
-				int index = SCommon.IndexOf(this.Handles, v => !IsPlaying(v.Value));
+				this.PlayIndex = SCommon.IndexOf(this.Handles, v => !IsPlaying(v.Value));
 
-				if (index == -1)
+				if (this.PlayIndex == -1)
 				{
 					this.Extend();
-					PlayByHandle(this.Handles[this.Handles.Count - 1]);
-				}
-				else
-				{
-					PlayByHandle(this.Handles[index]);
+					this.PlayIndex = this.Handles.Count - 1;
 				}
 			}
-			else
-			{
-				PlayByHandle(this.Handles[this.LastIndex]);
-			}
+			PlayByHandle(this.Handles[this.PlayIndex]);
 		}
 
 		private static bool IsPlaying(int handle)

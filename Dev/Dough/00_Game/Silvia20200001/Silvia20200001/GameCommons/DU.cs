@@ -265,6 +265,8 @@ namespace Charlotte.GameCommons
 
 		private static void P_RemoveFontFile(string file)
 		{
+			UnloadAllFontHandle(); // HACK: ざっくり過ぎる。
+
 			if (Win32APIWrapper.W_RemoveFontResourceEx(file, Win32APIWrapper.FR_PRIVATE, IntPtr.Zero) == 0) // ? 失敗
 				throw new Exception("W_RemoveFontResourceEx failed");
 		}

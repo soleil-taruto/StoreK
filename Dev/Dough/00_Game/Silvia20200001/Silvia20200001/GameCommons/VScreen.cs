@@ -22,6 +22,8 @@ namespace Charlotte.GameCommons
 
 		public static void UnloadAll()
 		{
+			ChangeDrawScreenToBack();
+
 			foreach (VScreen instance in Instances.Iterate())
 				instance.Unload();
 		}
