@@ -18,11 +18,11 @@ namespace Charlotte.GameCommons
 	/// </summary>
 	public class VScreen
 	{
-		private static List<VScreen> Instances = new List<VScreen>();
+		private static DU.Collector<VScreen> Instances = new DU.Collector<VScreen>();
 
 		public static void UnloadAll()
 		{
-			foreach (VScreen instance in Instances)
+			foreach (VScreen instance in Instances.Iterate())
 				instance.Unload();
 		}
 
@@ -120,9 +120,9 @@ namespace Charlotte.GameCommons
 			return this.Handle != -1;
 		}
 
-		public static IEnumerable<VScreen> GetAllSubScreen()
+		public static IEnumerable<VScreen> GetAllScreen()
 		{
-			return Instances.ToArray(); // 念のためリストの複製を返す。
+			return Instances.Iterate();
 		}
 
 		public object StoredObject = null; // 外部のメソッドが使用する。

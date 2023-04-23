@@ -795,9 +795,15 @@ namespace Charlotte.GameCommons
 			return exterior;
 		}
 
-		public static IEnumerable<T> Reverse<T>(IList<T> list)
+		/// <summary>
+		/// 列挙中にリストを変更しても良いような列挙子を返す。
+		/// </summary>
+		/// <typeparam name="T">任意の型</typeparam>
+		/// <param name="list">リスト</param>
+		/// <returns>列挙子</returns>
+		public static IEnumerable<T> Iterate<T>(IList<T> list)
 		{
-			for (int index = list.Count - 1; 0 <= index; index--)
+			for (int index = 0; index < list.Count; index++)
 			{
 				yield return list[index];
 			}

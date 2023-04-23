@@ -66,6 +66,21 @@ namespace Charlotte.GameCommons
 			}
 		}
 
+		public class Collector<T>
+		{
+			private List<T> Inner = new List<T>();
+
+			public void Add(T element)
+			{
+				this.Inner.Add(element);
+			}
+
+			public IEnumerable<T> Iterate()
+			{
+				return DD.Iterate(this.Inner);
+			}
+		}
+
 		private static I2Point GetMousePosition()
 		{
 			return new I2Point(Cursor.Position.X, Cursor.Position.Y);
@@ -406,9 +421,9 @@ namespace Charlotte.GameCommons
 			}
 		}
 
-		public static void StoreAllSubScreen()
+		public static void StoreImageDataIfLoadedForAllScreen()
 		{
-			foreach (VScreen screen in VScreen.GetAllSubScreen())
+			foreach (VScreen screen in VScreen.GetAllScreen())
 			{
 				if (screen.IsLoaded())
 				{
@@ -423,9 +438,9 @@ namespace Charlotte.GameCommons
 			DX.SetDrawScreen(DX.DX_SCREEN_BACK);
 		}
 
-		public static void RestoreAllSubScreen()
+		public static void RestoreImageDataIfStoredForAllScreen()
 		{
-			foreach (VScreen screen in VScreen.GetAllSubScreen())
+			foreach (VScreen screen in VScreen.GetAllScreen())
 			{
 				if (screen.StoredObject != null)
 				{
@@ -444,12 +459,7 @@ namespace Charlotte.GameCommons
 			DX.SetDrawScreen(DX.DX_SCREEN_BACK);
 		}
 
-		public static string[] GetKeyboardKeyNames()
-		{
-			return KeyboardKeys.GetNames();
-		}
-
-		private static class KeyboardKeys
+		public static class KeyboardKeys
 		{
 			private static string[] P_Names = null;
 

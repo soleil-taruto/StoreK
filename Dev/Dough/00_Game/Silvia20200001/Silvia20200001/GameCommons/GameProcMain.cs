@@ -82,9 +82,25 @@ namespace Charlotte.GameCommons
 
 		private static void Main2()
 		{
+			LibbonDialog.Th = new Thread(LibbonDialog.MainTh);
+			LibbonDialog.Th.Start();
 			try
 			{
 				Main3();
+			}
+			finally
+			{
+				LibbonDialog.AliveFlag = false;
+				LibbonDialog.MainThStandby.Set();
+				LibbonDialog.Th.Join();
+			}
+		}
+
+		private static void Main3()
+		{
+			try
+			{
+				Main4();
 			}
 			catch (DU.CoffeeBreak)
 			{
@@ -107,22 +123,6 @@ namespace Charlotte.GameCommons
 						ProcMain.WriteLog(ex);
 					}
 				}
-			}
-		}
-
-		private static void Main3()
-		{
-			LibbonDialog.Th = new Thread(LibbonDialog.MainTh);
-			LibbonDialog.Th.Start();
-			try
-			{
-				Main4();
-			}
-			finally
-			{
-				LibbonDialog.AliveFlag = false;
-				LibbonDialog.MainThStandby.Set();
-				LibbonDialog.Th.Join();
 			}
 		}
 
@@ -244,7 +244,7 @@ namespace Charlotte.GameCommons
 		/// <param name="h">高さ</param>
 		public static void SetRealScreenSize(int w, int h)
 		{
-			DU.StoreAllSubScreen();
+			DU.StoreImageDataIfLoadedForAllScreen();
 
 			Picture.UnloadAll();
 			VScreen.UnloadAll();
@@ -258,7 +258,7 @@ namespace Charlotte.GameCommons
 			DX.SetWindowSizeChangeEnableFlag(0);
 			DX.SetMouseDispFlag(GameSetting.MouseCursorShow ? 1 : 0);
 
-			DU.RestoreAllSubScreen();
+			DU.RestoreImageDataIfStoredForAllScreen();
 
 			int l = DD.TargetMonitor.L + (DD.TargetMonitor.W - w) / 2;
 			int t = DD.TargetMonitor.T + (DD.TargetMonitor.H - h) / 2;
