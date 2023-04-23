@@ -41,7 +41,7 @@ namespace Charlotte.GameCommons
 		/// <summary>
 		/// 各機能自由に使ってよいスクリーン
 		/// </summary>
-		public static SubScreen FreeScreen = new SubScreen(GameConfig.ScreenSize.W, GameConfig.ScreenSize.H);
+		public static VScreen FreeScreen = new VScreen(GameConfig.ScreenSize.W, GameConfig.ScreenSize.H);
 
 		public static void Pin<T>(T data)
 		{
@@ -408,7 +408,7 @@ namespace Charlotte.GameCommons
 
 		public static void StoreAllSubScreen()
 		{
-			foreach (SubScreen screen in SubScreen.GetAllSubScreen())
+			foreach (VScreen screen in VScreen.GetAllSubScreen())
 			{
 				if (screen.IsLoaded())
 				{
@@ -425,7 +425,7 @@ namespace Charlotte.GameCommons
 
 		public static void RestoreAllSubScreen()
 		{
-			foreach (SubScreen screen in SubScreen.GetAllSubScreen())
+			foreach (VScreen screen in VScreen.GetAllSubScreen())
 			{
 				if (screen.StoredObject != null)
 				{
