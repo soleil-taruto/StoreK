@@ -1,0 +1,80 @@
+﻿DxLibDotNet
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b.zip
+	-> File 2023/04/10 (月) 13:42:29 / 2023/04/10 (月) 13:42:35 / 22,547,468
+DxLibDotNet\DxLibDotNet3_24b\DxDLL.cs
+	-> File 2022/01/19 (水) 22:57:28 / 2023/02/26 (日) 12:38:39 / 2,210,897
+DxLibDotNet\DxLibDotNet3_24b\DxLib.dll
+	-> File 2022/01/19 (水) 22:57:28 / 2023/02/26 (日) 12:38:40 / 7,364,608
+DxLibDotNet\DxLibDotNet3_24b\DxLibDotNet.dll
+	-> File 2022/01/19 (水) 22:57:28 / 2023/02/26 (日) 12:38:46 / 827,392
+DxLibDotNet\DxLibDotNet3_24b\DxLib_x64.dll
+	-> File 2022/01/19 (水) 22:57:28 / 2023/02/26 (日) 12:38:43 / 8,579,584
+DxLibDotNet\DxLibDotNet3_24b\Sample
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015.sln
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 18:55:03 / 1,015
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\App.config
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 19:06:54 / 187
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\DxDLL.cs
+	-> File 2022/01/19 (水) 22:57:28 / 2023/02/26 (日) 12:38:39 / 2,210,897
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\Program.cs
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 19:06:24 / 1,650
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\Properties
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\Properties\AssemblyInfo.cs
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 18:54:58 / 1,694
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\Properties\Resources.Designer.cs
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 18:54:58 / 3,302
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\Properties\Resources.resx
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 18:54:57 / 5,612
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\Properties\Settings.Designer.cs
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 18:54:58 / 1,103
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\Properties\Settings.settings
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 18:54:57 / 249
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\VisualStudio2015.csproj
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 19:06:24 / 3,589
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\bin
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\bin\Debug
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\bin\Debug\DxLib.dll
+	-> File 2022/01/19 (水) 22:57:28 / 2023/02/26 (日) 12:38:40 / 7,364,608
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\bin\Debug\DxLib_x64.dll
+	-> File 2022/01/19 (水) 22:57:28 / 2023/02/26 (日) 12:38:43 / 8,579,584
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\bin\Debug\Src1.bmp
+	-> File 2022/01/19 (水) 22:57:28 / 2011/08/22 (月) 00:05:50 / 196,664
+DxLibDotNet\DxLibDotNet3_24b\Sample\VisualStudio2015\VisualStudio2015\bin\Debug\VisualStudio2015.exe
+	-> File 2022/01/19 (水) 22:57:28 / 2017/04/05 (水) 19:07:34 / 610,816
+DxLibDotNet\DxLibDotNet3_24b\Source
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b\Source\DxDLL.cpp
+	-> File 2022/01/19 (水) 22:57:28 / 2023/02/26 (日) 12:38:39 / 470,539
+DxLibDotNet\DxLibDotNet3_24b\Source\DxDLL.def
+	-> File 2022/01/19 (水) 22:57:28 / 2023/02/26 (日) 12:38:39 / 73,926
+DxLibDotNet\DxLibDotNet3_24b\Source\DxDLL.h
+	-> File 2022/01/19 (水) 22:57:30 / 2023/02/26 (日) 12:38:39 / 274,404
+DxLibDotNet\DxLibDotNet3_24b\Source\MakeDxLibDLLSource.cpp
+	-> File 2022/01/19 (水) 22:57:30 / 2022/02/19 (土) 01:28:57 / 176,990
+DxLibDotNet\DxLibDotNet3_24b\Source\TextAnalyse.cpp
+	-> File 2022/01/19 (水) 22:57:30 / 2018/12/29 (土) 01:29:50 / 16,395
+DxLibDotNet\DxLibDotNet3_24b\Source\TextAnalyse.h
+	-> File 2022/01/19 (水) 22:57:30 / 2019/04/30 (火) 22:42:29 / 5,280
+DxLibDotNet\DxLibDotNet3_24b\UnicodeVer
+	-> Directory
+DxLibDotNet\DxLibDotNet3_24b\UnicodeVer\DxDLLW.cs
+	-> File 2022/01/19 (水) 22:57:32 / 2023/02/26 (日) 12:38:39 / 2,335,117
+DxLibDotNet\DxLibDotNet3_24b\UnicodeVer\DxLibW.dll
+	-> File 2022/01/19 (水) 22:57:32 / 2023/02/26 (日) 12:38:42 / 7,290,880
+DxLibDotNet\DxLibDotNet3_24b\UnicodeVer\DxLibWDotNet.dll
+	-> File 2022/01/19 (水) 22:57:32 / 2023/02/26 (日) 12:38:48 / 827,392
+DxLibDotNet\DxLibDotNet3_24b\UnicodeVer\DxLibW_x64.dll
+	-> File 2022/01/19 (水) 22:57:32 / 2023/02/26 (日) 12:38:45 / 8,461,312
+DxLibDotNet\DxLibDotNet3_24b\readme.txt
+	-> File 2022/01/19 (水) 22:57:28 / 2017/05/14 (日) 12:09:00 / 3,746
