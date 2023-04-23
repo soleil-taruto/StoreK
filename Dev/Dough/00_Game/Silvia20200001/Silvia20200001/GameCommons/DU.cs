@@ -188,7 +188,10 @@ namespace Charlotte.GameCommons
 		public static Picture.PictureDataInfo GetPictureData(byte[] fileData)
 		{
 			if (fileData == null)
-				throw new Exception("Bad fileData");
+				throw new Exception("Bad fileData (null)");
+
+			if (fileData.Length == 0)
+				throw new Exception("Bad fileData (zero bytes)");
 
 			int softImage = -1;
 
