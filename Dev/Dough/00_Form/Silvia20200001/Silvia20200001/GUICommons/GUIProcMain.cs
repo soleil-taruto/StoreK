@@ -110,7 +110,7 @@ namespace Charlotte.GUICommons
 					// -- プロセスを同時に複数起動したとき、このダイアログを複数表示させないため。
 					//
 					MessageBox.Show(
-						"Already started on the other logon session !",
+						"This program is running in another logon session !",
 						Path.GetFileNameWithoutExtension(ProcMain.SelfFile) + " / Error",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error
