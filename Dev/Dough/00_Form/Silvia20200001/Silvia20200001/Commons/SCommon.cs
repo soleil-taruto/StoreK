@@ -243,6 +243,25 @@ namespace Charlotte.Commons
 			return dest;
 		}
 
+		public static T[] GetPart<T>(T[] src, int offset)
+		{
+			return GetPart(src, offset, src.Length - offset);
+		}
+
+		public static T[] GetPart<T>(T[] src, int offset, int size)
+		{
+			if (
+				src == null ||
+				offset < 0 || src.Length < offset ||
+				size < 0 || src.Length - offset < size
+				)
+				throw new Exception("Bad params");
+
+			T[] dest = new T[size];
+			Array.Copy(src, offset, dest, 0, size);
+			return dest;
+		}
+
 		public class Serializer
 		{
 			public static Serializer I = new Serializer();
