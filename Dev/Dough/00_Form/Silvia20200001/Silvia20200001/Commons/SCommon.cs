@@ -959,7 +959,7 @@ namespace Charlotte.Commons
 		}
 
 		/// <summary>
-		/// ファイル読み込みハンドルっぽいコールバック
+		/// ファイル読み込みハンドルなどバイトストリーム向けのコールバック
 		/// </summary>
 		/// <param name="buff">読み込んだデータの書き込み先</param>
 		/// <param name="offset">書き込み開始位置</param>
@@ -968,11 +968,11 @@ namespace Charlotte.Commons
 		public delegate int Read_d(byte[] buff, int offset, int count);
 
 		/// <summary>
-		/// ファイル書き込みハンドルっぽいコールバック
+		/// ファイル書き込みハンドルなどバイトストリーム向けのコールバック
 		/// </summary>
 		/// <param name="buff">書き込むデータの読み込み先</param>
 		/// <param name="offset">読み込み開始位置</param>
-		/// <param name="count">読み込みサイズ</param>
+		/// <param name="count">読み込みサイズ(書き込みサイズ)</param>
 		public delegate void Write_d(byte[] buff, int offset, int count);
 
 		public static void ReadToEnd(Read_d reader, Write_d writer)

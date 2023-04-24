@@ -22,7 +22,7 @@ namespace Charlotte.GameCommons
 
 		public static void UnloadAll()
 		{
-			ChangeDrawScreenToBack(); // HACK: 描画先スクリーンの変更は呼び出し側の責任とすべきか。
+			ChangeDrawScreenToBack(); // HACK: ここでやるか。
 
 			foreach (VScreen instance in Instances.Iterate())
 				instance.Unload();
