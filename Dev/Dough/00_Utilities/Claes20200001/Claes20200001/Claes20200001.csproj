@@ -93,7 +93,7 @@
     <Compile Include="Utilities\RingCipherFile.cs" />
     <Compile Include="Utilities\HTTPClient.cs" />
     <Compile Include="Utilities\JsonNode.cs" />
-    <Compile Include="Utilities\MillerRabin.cs" />
+    <Compile Include="Utilities\MillerRabinTester.cs" />
     <Compile Include="Utilities\RingCipher.cs" />
     <Compile Include="Utilities\JapaneseDate.cs" />
     <Compile Include="Utilities\StringSpliceSequencer.cs" />

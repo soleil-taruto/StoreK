@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte.Utilities
 {
-	public static class MillerRabin
+	public static class MillerRabinTester
 	{
 		/// <summary>
 		/// ミラーラビン素数判定法によって 0 以上 2^64 未満の整数が素数であるか判定する。

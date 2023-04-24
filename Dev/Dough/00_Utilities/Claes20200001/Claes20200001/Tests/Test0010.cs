@@ -8,7 +8,7 @@ using Charlotte.Utilities;
 namespace Charlotte.Tests
 {
 	/// <summary>
-	/// MillerRabin.cs テスト
+	/// MillerRabinTester.cs テスト
 	/// </summary>
 	public class Test0010
 	{
@@ -47,7 +47,7 @@ namespace Charlotte.Tests
 
 		private bool Test01_b1(ulong n)
 		{
-			return MillerRabin.IsPrime(n);
+			return MillerRabinTester.IsPrime(n);
 		}
 
 		private bool Test01_b2(ulong n)
@@ -121,7 +121,7 @@ namespace Charlotte.Tests
 
 			for (ulong n = PRIMES_RANGE_MIN; ; n++)
 			{
-				bool ans1 = MillerRabin.IsPrime(n);
+				bool ans1 = MillerRabinTester.IsPrime(n);
 				bool ans2 = PRIMES.Contains(n);
 
 				Console.WriteLine(n + " --> " + ans1 + ", " + ans2);
