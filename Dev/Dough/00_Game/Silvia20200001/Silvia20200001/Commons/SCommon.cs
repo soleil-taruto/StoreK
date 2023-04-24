@@ -1155,7 +1155,7 @@ namespace Charlotte.Commons
 		{
 			byte[][] dest = new byte[0x10000][];
 
-			for (byte bChr = 0x00; bChr <= 0x7e; bChr++) // ASCII with control-code
+			for (byte bChr = 0x00; bChr <= 0x7e; bChr++) // 制御コード + アスキー文字
 			{
 				dest[(int)bChr] = new byte[] { bChr };
 			}
@@ -1164,7 +1164,7 @@ namespace Charlotte.Commons
 				dest[SJISHanKanaToUnicodeHanKana((int)bChr)] = new byte[] { bChr };
 			}
 
-			// 2バイト文字
+			// 全角文字
 			{
 				char[] unicodes = GetJChars().ToArray();
 
@@ -1175,7 +1175,7 @@ namespace Charlotte.Commons
 				{
 					byte[] bJChr = ENCODING_SJIS.GetBytes(new string(new char[] { unicode }));
 
-					if (bJChr.Length != 2) // ? 2バイト文字じゃない。
+					if (bJChr.Length != 2) // ? 全角文字じゃない。
 						throw null; // never
 
 					dest[(int)unicode] = bJChr;
