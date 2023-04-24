@@ -1252,7 +1252,7 @@ namespace Charlotte.Commons
 						if (src.Length <= index) // ? 後半欠損
 							break;
 
-						if (!P_JChar.I.Contains(chr, src[index])) // ? 破損
+						if (!JCharCodes.I.Contains(chr, src[index])) // ? 破損
 							continue;
 
 						dest.WriteByte(chr);
@@ -1285,10 +1285,10 @@ namespace Charlotte.Commons
 		/// <returns>SJIS(CP-932)の2バイト文字のバイト列</returns>
 		public static IEnumerable<byte> GetJCharBytes()
 		{
-			foreach (UInt16 chr in GetJCharCodes())
+			foreach (UInt16 code in GetJCharCodes())
 			{
-				yield return (byte)(chr >> 8);
-				yield return (byte)(chr & 0xff);
+				yield return (byte)(code >> 8);
+				yield return (byte)(code & 0xff);
 			}
 		}
 
@@ -1299,35 +1299,35 @@ namespace Charlotte.Commons
 		/// <returns>SJIS(CP-932)の2バイト文字の列挙</returns>
 		public static IEnumerable<UInt16> GetJCharCodes()
 		{
-			for (UInt16 chr = P_JChar.CHR_MIN; chr <= P_JChar.CHR_MAX; chr++)
-				if (P_JChar.I.Contains(chr))
-					yield return chr;
+			for (UInt16 code = JCharCodes.CODE_MIN; code <= JCharCodes.CODE_MAX; code++)
+				if (JCharCodes.I.Contains(code))
+					yield return code;
 		}
 
-		private class P_JChar
+		private class JCharCodes
 		{
-			private static P_JChar _i = null;
+			private static JCharCodes _i = null;
 
-			public static P_JChar I
+			public static JCharCodes I
 			{
 				get
 				{
 					if (_i == null)
-						_i = new P_JChar();
+						_i = new JCharCodes();
 
 					return _i;
 				}
 			}
 
-			private UInt64[] ChrMap = new UInt64[0x10000 / 64];
+			private UInt64[] CodeMap = new UInt64[0x10000 / 64];
 
-			private P_JChar()
+			private JCharCodes()
 			{
 				this.AddAll();
 			}
 
-			public const UInt16 CHR_MIN = 0x8140;
-			public const UInt16 CHR_MAX = 0xfc4b;
+			public const UInt16 CODE_MIN = 0x8140;
+			public const UInt16 CODE_MAX = 0xfc4b;
 
 			#region AddAll
 
@@ -1442,32 +1442,32 @@ namespace Charlotte.Commons
 
 			#endregion
 
-			private void Add(UInt16 bgn, UInt16 end)
+			private void Add(UInt16 codeMin, UInt16 codeMax)
 			{
-				for (UInt16 chr = bgn; chr <= end; chr++)
+				for (UInt16 code = codeMin; code <= codeMax; code++)
 				{
-					this.Add(chr);
+					this.Add(code);
 				}
 			}
 
-			private void Add(UInt16 chr)
+			private void Add(UInt16 code)
 			{
-				this.ChrMap[chr / 64] |= (UInt64)1 << (chr % 64);
+				this.CodeMap[code / 64] |= (UInt64)1 << (code % 64);
 			}
 
 			public bool Contains(byte lead, byte trail)
 			{
-				UInt16 chr = lead;
+				UInt16 code = lead;
 
-				chr <<= 8;
-				chr |= trail;
+				code <<= 8;
+				code |= trail;
 
-				return Contains(chr);
+				return Contains(code);
 			}
 
-			public bool Contains(UInt16 chr)
+			public bool Contains(UInt16 code)
 			{
-				return (this.ChrMap[chr / 64] & (UInt64)1 << (chr % 64)) != (UInt64)0;
+				return (this.CodeMap[code / 64] & ((UInt64)1 << (code % 64))) != (UInt64)0;
 			}
 		}
 
