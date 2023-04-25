@@ -287,9 +287,9 @@ namespace Charlotte.Commons
 					)
 					throw new Exception("不正な入力文字列リスト");
 
-				return EncodeGzB64(SCommon.Base64.I.Encode(SCommon.Compress(
+				return Encode(SCommon.Base64.I.EncodeNoPadding(SCommon.Compress(
 					SCommon.SplittableJoin(plainStrings.Select(plainString => Encoding.UTF8.GetBytes(plainString)).ToArray())
-					)).Replace("=", ""));
+					)));
 			}
 
 			/// <summary>
@@ -305,12 +305,12 @@ namespace Charlotte.Commons
 					)
 					throw new Exception("シリアライズされた文字列は破損しています。");
 
-				return SCommon.Split(SCommon.Decompress(SCommon.Base64.I.Decode(DecodeGzB64(serializedString))))
+				return SCommon.Split(SCommon.Decompress(SCommon.Base64.I.Decode(Decode(serializedString))))
 					.Select(decodedBlock => Encoding.UTF8.GetString(decodedBlock))
 					.ToArray();
 			}
 
-			private string EncodeGzB64(string str)
+			private string Encode(string str)
 			{
 				int stAn = 0;
 				int edAn = 0;
@@ -342,7 +342,7 @@ namespace Charlotte.Commons
 				return stAn + str + edAn;
 			}
 
-			private string DecodeGzB64(string str)
+			private string Decode(string str)
 			{
 				return
 					(str[0] == '0' ? "" : "H4sI") +
@@ -2127,7 +2127,6 @@ namespace Charlotte.Commons
 			}
 
 			private const int CHAR_MAP_SIZE = 0x80;
-
 			private const char CHAR_PADDING = '=';
 
 			private char[] Chars;
@@ -2145,7 +2144,7 @@ namespace Charlotte.Commons
 					this.CharMap[(int)this.Chars[index]] = index;
 			}
 
-			public string EncodeURL(byte[] data)
+			public string EncodeNoPadding(byte[] data)
 			{
 				return Encode(data).Replace(new string(new char[] { CHAR_PADDING }), "");
 			}
@@ -2278,10 +2277,7 @@ namespace Charlotte.Commons
 			}
 
 			private const int CHAR_MAP_SIZE = 0x80;
-
 			private const char CHAR_PADDING = '=';
-			private const char CHAR_URL_62 = '-';
-			private const char CHAR_URL_63 = '_';
 
 			private char[] Chars;
 			private int[] CharMap;
@@ -2298,15 +2294,9 @@ namespace Charlotte.Commons
 					this.CharMap[(int)this.Chars[index]] = index;
 			}
 
-			public string EncodeURL(byte[] data)
+			public string EncodeNoPadding(byte[] data)
 			{
-				string str = Encode(data);
-
-				str = str.Replace(new string(new char[] { CHAR_PADDING }), "");
-				str = str.Replace(this.Chars[62], CHAR_URL_62);
-				str = str.Replace(this.Chars[63], CHAR_URL_63);
-
-				return str;
+				return Encode(data).Replace(new string(new char[] { CHAR_PADDING }), "");
 			}
 
 			public string Encode(byte[] data)
@@ -2328,8 +2318,6 @@ namespace Charlotte.Commons
 				if (str == null)
 					str = "";
 
-				str = str.Replace(CHAR_URL_62, this.Chars[62]);
-				str = str.Replace(CHAR_URL_63, this.Chars[63]);
 				str = new string(str.Where(chr => (int)chr < CHAR_MAP_SIZE && this.CharMap[(int)chr] != -1).ToArray());
 
 				switch (str.Length % 4)
