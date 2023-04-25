@@ -464,17 +464,17 @@ namespace Charlotte.GameCommons
 
 		public static class KeyboardKeys
 		{
-			private static string[] P_Names = null;
+			private static string[] Names = null;
 
 			public static string[] GetNames()
 			{
-				if (P_Names == null)
-					P_Names = P_GetNames();
+				if (Names == null)
+					Names = GetNames_Main();
 
-				return P_Names;
+				return Names;
 			}
 
-			private static string[] P_GetNames()
+			private static string[] GetNames_Main()
 			{
 				string[] names = new string[Keyboard.KEY_MAX];
 

@@ -2109,6 +2109,157 @@ namespace Charlotte.Commons
 			return Process.Start(psi);
 		}
 
+		#region Base32
+
+		public class Base32
+		{
+			private static Base32 _i = null;
+
+			public static Base32 I
+			{
+				get
+				{
+					if (_i == null)
+						_i = new Base32();
+
+					return _i;
+				}
+			}
+
+			private const int CHAR_MAP_SIZE = 0x80;
+
+			private const char CHAR_PADDING = '=';
+
+			private char[] Chars;
+			private int[] CharMap;
+
+			private Base32()
+			{
+				this.Chars = (SCommon.ALPHA_UPPER + SCommon.DECIMAL.Substring(2, 6)).ToArray();
+				this.CharMap = new int[0x80];
+
+				for (int index = 0; index < CHAR_MAP_SIZE; index++)
+					this.CharMap[index] = -1;
+
+				for (int index = 0; index < this.Chars.Length; index++)
+					this.CharMap[(int)this.Chars[index]] = index;
+			}
+
+			public string EncodeURL(byte[] data)
+			{
+				return Encode(data).Replace(new string(new char[] { CHAR_PADDING }), "");
+			}
+
+			public string Encode(byte[] data)
+			{
+				if (data == null)
+					data = SCommon.EMPTY_BYTES;
+
+				string str;
+
+				if (data.Length % 5 == 0)
+				{
+					str = EncodeEven(data);
+				}
+				else
+				{
+					int padding = ((5 - data.Length % 5) * 8) / 5;
+
+					data = SCommon.Join(new byte[][]
+					{
+						data,
+						Enumerable.Range(0, 5 - data.Length % 5).Select(dummy => (byte)0).ToArray(),
+					});
+
+					str = EncodeEven(data);
+					str = str.Substring(0, str.Length - padding) + new string(CHAR_PADDING, padding);
+				}
+				return str;
+			}
+
+			private string EncodeEven(byte[] data)
+			{
+				StringBuilder buff = new StringBuilder((data.Length / 5) * 8);
+				int index = 0;
+				ulong value;
+
+				while (index < data.Length)
+				{
+					value = (ulong)data[index++] << 32;
+					value |= (ulong)data[index++] << 24;
+					value |= (ulong)data[index++] << 16;
+					value |= (ulong)data[index++] << 8;
+					value |= (ulong)data[index++];
+
+					buff.Append(this.Chars[(value >> 35) & 0x1f]);
+					buff.Append(this.Chars[(value >> 30) & 0x1f]);
+					buff.Append(this.Chars[(value >> 25) & 0x1f]);
+					buff.Append(this.Chars[(value >> 20) & 0x1f]);
+					buff.Append(this.Chars[(value >> 15) & 0x1f]);
+					buff.Append(this.Chars[(value >> 10) & 0x1f]);
+					buff.Append(this.Chars[(value >> 5) & 0x1f]);
+					buff.Append(this.Chars[value & 0x1f]);
+				}
+				return buff.ToString();
+			}
+
+			/// <summary>
+			/// Base32をデコードする。
+			/// 注意：入力文字列がでたらめな内容であっても、例外を投げずに何らかのバイト列を返す。
+			/// </summary>
+			/// <param name="str">入力文字列</param>
+			/// <returns>バイト列</returns>
+			public byte[] Decode(string str)
+			{
+				if (str == null)
+					str = "";
+
+				str = new string(str.Where(chr => (int)chr < CHAR_MAP_SIZE && this.CharMap[(int)chr] != -1).ToArray());
+
+				byte[] data;
+
+				if (str.Length % 8 == 0)
+				{
+					data = DecodeEven(str);
+				}
+				else
+				{
+					data = DecodeEven(str + new string(this.Chars[0], 8 - str.Length % 8));
+					data = SCommon.GetPart(data, 0, data.Length - 5 + ((str.Length % 8) * 5) / 8);
+				}
+				return data;
+			}
+
+			private byte[] DecodeEven(string str)
+			{
+				byte[] data = new byte[(str.Length / 8) * 5];
+				int reader = 0;
+				int writer = 0;
+				ulong value;
+
+				while (reader < str.Length)
+				{
+					value = (ulong)(uint)this.CharMap[(int)str[reader++]] << 35;
+					value |= (ulong)(uint)this.CharMap[(int)str[reader++]] << 30;
+					value |= (ulong)(uint)this.CharMap[(int)str[reader++]] << 25;
+					value |= (ulong)(uint)this.CharMap[(int)str[reader++]] << 20;
+					value |= (ulong)(uint)this.CharMap[(int)str[reader++]] << 15;
+					value |= (ulong)(uint)this.CharMap[(int)str[reader++]] << 10;
+					value |= (ulong)(uint)this.CharMap[(int)str[reader++]] << 5;
+					value |= (ulong)(uint)this.CharMap[(int)str[reader++]];
+
+					data[writer++] = (byte)((value >> 32) & 0xff);
+					data[writer++] = (byte)((value >> 24) & 0xff);
+					data[writer++] = (byte)((value >> 16) & 0xff);
+					data[writer++] = (byte)((value >> 8) & 0xff);
+					data[writer++] = (byte)(value & 0xff);
+				}
+				return data;
+			}
+		}
+
+		#endregion
+
 		#region Base64
 
 		public class Base64
@@ -2126,132 +2277,91 @@ namespace Charlotte.Commons
 				}
 			}
 
-			private char[] Chars;
-			private byte[] CharMap;
+			private const int CHAR_MAP_SIZE = 0x80;
 
 			private const char CHAR_PADDING = '=';
+			private const char CHAR_URL_62 = '-';
+			private const char CHAR_URL_63 = '_';
+
+			private char[] Chars;
+			private int[] CharMap;
 
 			private Base64()
 			{
 				this.Chars = (SCommon.ALPHA_UPPER + SCommon.ALPHA_LOWER + SCommon.DECIMAL + "+/").ToArray();
-				this.CharMap = new byte[(int)char.MaxValue + 1];
+				this.CharMap = new int[CHAR_MAP_SIZE];
 
-				for (int index = 0; index <= (int)char.MaxValue; index++)
-					this.CharMap[index] = 0xff;
+				for (int index = 0; index < CHAR_MAP_SIZE; index++)
+					this.CharMap[index] = -1;
 
-				for (int index = 0; index < 64; index++)
-					this.CharMap[this.Chars[index]] = (byte)index;
+				for (int index = 0; index < this.Chars.Length; index++)
+					this.CharMap[(int)this.Chars[index]] = index;
+			}
 
-				this.CharMap['-'] = 62; // Base64 URL Encode の 63 番目の文字
-				this.CharMap['_'] = 63; // Base64 URL Encode の 64 番目の文字
+			public string EncodeURL(byte[] data)
+			{
+				string str = Encode(data);
+
+				str = str.Replace(new string(new char[] { CHAR_PADDING }), "");
+				str = str.Replace(this.Chars[62], CHAR_URL_62);
+				str = str.Replace(this.Chars[63], CHAR_URL_63);
+
+				return str;
+			}
+
+			public string Encode(byte[] data)
+			{
+				if (data == null)
+					data = SCommon.EMPTY_BYTES;
+
+				return Convert.ToBase64String(data);
 			}
 
 			/// <summary>
-			/// バイト列をBase64に変換します。
-			/// 出力フォーマット：
-			/// -- Base64 Encode -- 但し改行無し
+			/// Base64をデコードする。
+			/// 注意：入力文字列がでたらめな内容であっても、例外を投げずに何らかのバイト列を返す。
 			/// </summary>
-			/// <param name="src">バイト列</param>
-			/// <returns>Base64</returns>
-			public string Encode(byte[] src)
+			/// <param name="str">入力文字列</param>
+			/// <returns>バイト列</returns>
+			public byte[] Decode(string str)
 			{
-				char[] dest = new char[((src.Length + 2) / 3) * 4];
-				int writer = 0;
-				int index = 0;
-				int chr;
+				if (str == null)
+					str = "";
 
-				while (index + 3 <= src.Length)
-				{
-					chr = (src[index++] & 0xff) << 16;
-					chr |= (src[index++] & 0xff) << 8;
-					chr |= src[index++] & 0xff;
-					dest[writer++] = this.Chars[chr >> 18];
-					dest[writer++] = this.Chars[(chr >> 12) & 0x3f];
-					dest[writer++] = this.Chars[(chr >> 6) & 0x3f];
-					dest[writer++] = this.Chars[chr & 0x3f];
-				}
-				if (index + 2 == src.Length)
-				{
-					chr = (src[index++] & 0xff) << 8;
-					chr |= src[index++] & 0xff;
-					dest[writer++] = this.Chars[chr >> 10];
-					dest[writer++] = this.Chars[(chr >> 4) & 0x3f];
-					dest[writer++] = this.Chars[(chr << 2) & 0x3c];
-					dest[writer++] = CHAR_PADDING;
-				}
-				else if (index + 1 == src.Length)
-				{
-					chr = src[index++] & 0xff;
-					dest[writer++] = this.Chars[chr >> 2];
-					dest[writer++] = this.Chars[(chr << 4) & 0x30];
-					dest[writer++] = CHAR_PADDING;
-					dest[writer++] = CHAR_PADDING;
-				}
-				return new string(dest);
-			}
+				str = str.Replace(CHAR_URL_62, this.Chars[62]);
+				str = str.Replace(CHAR_URL_63, this.Chars[63]);
+				str = new string(str.Where(chr => (int)chr < CHAR_MAP_SIZE && this.CharMap[(int)chr] != -1).ToArray());
 
-			/// <summary>
-			/// バイト列をBase64に変換します。
-			/// 出力フォーマット：
-			/// -- Base64 URL Encode
-			/// </summary>
-			/// <param name="src">バイト列</param>
-			/// <returns>Base64</returns>
-			public string EncodeURL(byte[] src)
-			{
-				return Encode(src)
-					.Replace("=", "")
-					.Replace('+', '-')
-					.Replace('/', '_');
-			}
-
-			/// <summary>
-			/// Base64を元のバイト列に変換します。
-			/// 対応フォーマット：
-			/// -- Base64 Encode -- パディング無しでも良い。余計な空白・改行が含まれていても良い。
-			/// -- Base64 URL Encode
-			/// </summary>
-			/// <param name="src">Base64</param>
-			/// <returns>元のバイト列</returns>
-			public byte[] Decode(string src)
-			{
-				// パディング除去
-				// 空白・改行などの不要な文字を除去する。
+				switch (str.Length % 4)
 				{
-					src = new string(src.Where(v => this.CharMap[(int)v] != 0xff).ToArray());
+					case 0:
+						break;
+
+					case 1:
+						str = str.Substring(0, str.Length - 1); // 端数1はあり得ないので切り捨てる。
+						break;
+
+					case 2:
+						if (this.CharMap[(int)str[str.Length - 1]] % 16 != 0) // ? 端数2のときのあり得ない最後の文字
+						{
+							str = str.Substring(0, str.Length - 2); // 端数を切り捨てる。
+						}
+						break;
+
+					case 3:
+						if (this.CharMap[(int)str[str.Length - 1]] % 4 != 0) // ? 端数3のときのあり得ない最後の文字
+						{
+							str = str.Substring(0, str.Length - 3); // 端数を切り捨てる。
+						}
+						break;
+
+					default:
+						throw null; // never
 				}
 
-				int destSize = (int)(((long)src.Length * 3) / 4);
-				byte[] dest = new byte[destSize];
-				int writer = 0;
-				int index = 0;
-				int chr;
+				str += new string(CHAR_PADDING, (4 - str.Length % 4) % 4);
 
-				while (writer + 3 <= destSize)
-				{
-					chr = (this.CharMap[src[index++]] & 0x3f) << 18;
-					chr |= (this.CharMap[src[index++]] & 0x3f) << 12;
-					chr |= (this.CharMap[src[index++]] & 0x3f) << 6;
-					chr |= this.CharMap[src[index++]] & 0x3f;
-					dest[writer++] = (byte)(chr >> 16);
-					dest[writer++] = (byte)((chr >> 8) & 0xff);
-					dest[writer++] = (byte)(chr & 0xff);
-				}
-				if (writer + 2 == destSize)
-				{
-					chr = (this.CharMap[src[index++]] & 0x3f) << 10;
-					chr |= (this.CharMap[src[index++]] & 0x3f) << 4;
-					chr |= (this.CharMap[src[index++]] & 0x3c) >> 2;
-					dest[writer++] = (byte)(chr >> 8);
-					dest[writer++] = (byte)(chr & 0xff);
-				}
-				else if (writer + 1 == destSize)
-				{
-					chr = (this.CharMap[src[index++]] & 0x3f) << 2;
-					chr |= (this.CharMap[src[index++]] & 0x30) >> 4;
-					dest[writer++] = (byte)chr;
-				}
-				return dest;
+				return Convert.FromBase64String(str);
 			}
 		}
 
