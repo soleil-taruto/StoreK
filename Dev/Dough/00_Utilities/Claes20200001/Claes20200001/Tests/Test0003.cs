@@ -119,7 +119,7 @@ namespace Charlotte.Tests
 				cutFlag = false;
 			}
 
-			Console.WriteLine(SCommon.Hex.ToString(data) + (cutFlag ? "..." : ""));
+			Console.WriteLine(SCommon.Hex.I.ToString(data) + (cutFlag ? "..." : ""));
 		}
 
 		private static byte[] P_GetBytesRange(byte[] src, int offset, int size)

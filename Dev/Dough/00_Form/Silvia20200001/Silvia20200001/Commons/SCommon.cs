@@ -269,10 +269,12 @@ namespace Charlotte.Commons
 			private Serializer()
 			{ }
 
+			private Regex RegexSerializedString = new Regex("^[0-9][A-Za-z0-9+/]*[0-9]$");
+
 			/// <summary>
 			/// 文字列のリストを連結してシリアライズします。
 			/// シリアライズされた文字列：
-			/// -- 空文字列ではない。
+			/// -- 常に空文字列ではない。
 			/// -- 書式 == ^[0-9][A-Za-z0-9+/]*[0-9]$
 			/// </summary>
 			/// <param name="plainStrings">任意の文字列のリスト</param>
@@ -283,7 +285,7 @@ namespace Charlotte.Commons
 					plainStrings == null ||
 					plainStrings.Any(plainString => plainString == null)
 					)
-					throw new ArgumentException();
+					throw new Exception("不正な入力文字列リスト");
 
 				return EncodeGzB64(SCommon.Base64.I.Encode(SCommon.Compress(
 					SCommon.SplittableJoin(plainStrings.Select(plainString => Encoding.UTF8.GetBytes(plainString)).ToArray())
@@ -301,14 +303,12 @@ namespace Charlotte.Commons
 					serializedString == null ||
 					!RegexSerializedString.IsMatch(serializedString)
 					)
-					throw new ArgumentException();
+					throw new Exception("シリアライズされた文字列は破損しています。");
 
 				return SCommon.Split(SCommon.Decompress(SCommon.Base64.I.Decode(DecodeGzB64(serializedString))))
 					.Select(decodedBlock => Encoding.UTF8.GetString(decodedBlock))
 					.ToArray();
 			}
-
-			private Regex RegexSerializedString = new Regex("^[0-9][A-Za-z0-9+/]*[0-9]$");
 
 			private string EncodeGzB64(string str)
 			{
@@ -1560,10 +1560,20 @@ namespace Charlotte.Commons
 			}
 		}
 
-		public static class Hex
+		public class Hex
 		{
-			public static string ToString(byte[] src)
+			public static Hex I = new Hex();
+
+			private Hex()
+			{ }
+
+			private Regex RegexHexString = new Regex("^([0-9A-Fa-f]{2})*$");
+
+			public string ToString(byte[] src)
 			{
+				if (src == null)
+					throw new Exception("不正な入力バイト列");
+
 				StringBuilder buff = new StringBuilder(src.Length * 2);
 
 				foreach (byte chr in src)
@@ -1574,10 +1584,13 @@ namespace Charlotte.Commons
 				return buff.ToString();
 			}
 
-			public static byte[] ToBytes(string src)
+			public byte[] ToBytes(string src)
 			{
-				if (src.Length % 2 != 0)
-					throw new ArgumentException("入力文字列の長さに問題があります。");
+				if (
+					src == null ||
+					!RegexHexString.IsMatch(src)
+					)
+					throw new Exception("バイト列の十六進表現は破損しています。");
 
 				byte[] dest = new byte[src.Length / 2];
 
@@ -1591,12 +1604,12 @@ namespace Charlotte.Commons
 				return dest;
 			}
 
-			private static int To4Bit(char chr)
+			private int To4Bit(char chr)
 			{
 				int ret = HEXADECIMAL_LOWER.IndexOf(char.ToLower(chr));
 
 				if (ret == -1)
-					throw new ArgumentException("入力文字列に含まれる文字に問題があります。");
+					throw null; // never
 
 				return ret;
 			}

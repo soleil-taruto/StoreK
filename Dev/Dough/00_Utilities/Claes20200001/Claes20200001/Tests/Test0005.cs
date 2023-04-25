@@ -32,7 +32,7 @@ namespace Charlotte.Tests
 						ProcMain.WriteLog(channel.PathQuery);
 						ProcMain.WriteLog(channel.HTTPVersion);
 						ProcMain.WriteLog(string.Join(", ", channel.HeaderPairs.Select(pair => pair[0] + "=" + pair[1])));
-						ProcMain.WriteLog(SCommon.Hex.ToString(channel.Body.ToByteArray()));
+						ProcMain.WriteLog(SCommon.Hex.I.ToString(channel.Body.ToByteArray()));
 
 						channel.ResStatus = 200;
 						channel.ResHeaderPairs.Add(new string[] { "Content-Type", "text/plain; charset=US-ASCII" });

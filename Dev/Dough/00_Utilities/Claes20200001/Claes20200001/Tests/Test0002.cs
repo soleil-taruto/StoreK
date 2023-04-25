@@ -86,7 +86,7 @@ namespace Charlotte.Tests
 				cutFlag = false;
 			}
 
-			Console.WriteLine(SCommon.Hex.ToString(data) + (cutFlag ? "..." : ""));
+			Console.WriteLine(SCommon.Hex.I.ToString(data) + (cutFlag ? "..." : ""));
 		}
 
 		public void Test02()

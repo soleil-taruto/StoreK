@@ -37,7 +37,7 @@ namespace Charlotte.Tests
 
 				string strData = line.Substring(colon + 1);
 				strData = strData.Replace(" ", "");
-				byte[] data = SCommon.Hex.ToBytes(strData);
+				byte[] data = SCommon.Hex.I.ToBytes(strData);
 
 				if (line[0] == 'K')
 				{
@@ -62,9 +62,9 @@ namespace Charlotte.Tests
 
 			foreach (TestCase testCase in testCases)
 			{
-				ProcMain.WriteLog("K " + SCommon.Hex.ToString(testCase.Key));
-				ProcMain.WriteLog("P " + SCommon.Hex.ToString(testCase.Plain));
-				ProcMain.WriteLog("C " + SCommon.Hex.ToString(testCase.Cipher));
+				ProcMain.WriteLog("K " + SCommon.Hex.I.ToString(testCase.Key));
+				ProcMain.WriteLog("P " + SCommon.Hex.I.ToString(testCase.Plain));
+				ProcMain.WriteLog("C " + SCommon.Hex.I.ToString(testCase.Cipher));
 
 				using (AESCipher transformer = new AESCipher(testCase.Key))
 				{
