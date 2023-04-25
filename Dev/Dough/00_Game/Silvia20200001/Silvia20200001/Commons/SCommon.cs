@@ -1590,7 +1590,7 @@ namespace Charlotte.Commons
 					src == null ||
 					!RegexHexString.IsMatch(src)
 					)
-					throw new Exception("バイト列の十六進表現は破損しています。");
+					throw new Exception("文字列に変換されたバイト列は破損しています。");
 
 				byte[] dest = new byte[src.Length / 2];
 

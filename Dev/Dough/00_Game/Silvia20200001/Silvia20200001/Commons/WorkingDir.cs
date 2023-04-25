@@ -49,10 +49,15 @@ namespace Charlotte.Commons
 
 		private static string GetRootDir()
 		{
-			return Path.Combine(Environment.GetEnvironmentVariable("TMP"), "Claes20200001_{4c90ff11-7fe5-4664-a66d-62a440bb4826}_" + Process.GetCurrentProcess().Id);
+			string envTMP = Environment.GetEnvironmentVariable("TMP");
+
+			if (string.IsNullOrEmpty(envTMP))
+				throw new Exception("Environment variable TMP is not defined");
+
+			return Path.Combine(envTMP, "Claes20200001_TMP_{683426cc-d32b-485d-ad69-c4f210938f72}_" + Process.GetCurrentProcess().Id);
 		}
 
-		private static ulong CtorCounter = 0UL;
+		private static ulong CtorCounter = 0;
 
 		private string Dir = null;
 
@@ -75,7 +80,7 @@ namespace Charlotte.Commons
 			return Path.Combine(this.GetDir(), localName);
 		}
 
-		private ulong PathCounter = 0UL;
+		private ulong PathCounter = 0;
 
 		public string MakePath()
 		{
