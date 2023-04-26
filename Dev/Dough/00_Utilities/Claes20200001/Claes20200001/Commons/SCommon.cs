@@ -416,8 +416,19 @@ namespace Charlotte.Commons
 		public static double ToRange(double value, double minval, double maxval)
 		{
 			CheckNaN(value);
+			//CheckNaN(minval);
+			//CheckNaN(maxval);
 
 			return Math.Max(minval, Math.Min(maxval, value));
+		}
+
+		public static bool IsRange(double value, double minval, double maxval)
+		{
+			CheckNaN(value);
+			//CheckNaN(minval);
+			//CheckNaN(maxval);
+
+			return minval <= value && value <= maxval;
 		}
 
 		public static int ToInt(double value)
@@ -1077,11 +1088,6 @@ namespace Charlotte.Commons
 		}
 
 		public static bool IsRange(long value, long minval, long maxval)
-		{
-			return minval <= value && value <= maxval;
-		}
-
-		public static bool IsRange(double value, double minval, double maxval)
 		{
 			return minval <= value && value <= maxval;
 		}
@@ -2095,8 +2101,6 @@ namespace Charlotte.Commons
 					break;
 
 				case StartProcessWindowStyle_e.MINIMIZED:
-					psi.CreateNoWindow = false;
-					psi.UseShellExecute = true;
 					psi.WindowStyle = ProcessWindowStyle.Minimized;
 					break;
 
