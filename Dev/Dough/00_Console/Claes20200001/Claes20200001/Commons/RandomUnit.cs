@@ -44,7 +44,7 @@ namespace Charlotte.Commons
 		private int Bits;
 		private int BitPos = 8;
 
-		public int GetBit()
+		private int GetBit()
 		{
 			if (8 <= this.BitPos)
 			{
