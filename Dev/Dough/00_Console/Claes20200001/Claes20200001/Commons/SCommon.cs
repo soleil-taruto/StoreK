@@ -1543,7 +1543,6 @@ namespace Charlotte.Commons
 			return GetSHA512(writePart =>
 			{
 				SCommon.ReadToEnd(reader, writePart);
-				//SCommon.ReadToEnd(reader, (buff, offset, count) => writePart(buff, offset, count)); // old
 			});
 		}
 
@@ -1570,8 +1569,21 @@ namespace Charlotte.Commons
 		{
 			public static Hex I = new Hex();
 
+			private int[] HexChar2Value;
+
 			private Hex()
-			{ }
+			{
+				this.HexChar2Value = new int[(int)'f' + 1];
+
+				for (int index = 0; index < 10; index++)
+					this.HexChar2Value[(int)'0' + index] = index;
+
+				for (int index = 0; index < 6; index++)
+				{
+					this.HexChar2Value[(int)'A' + index] = 10 + index;
+					this.HexChar2Value[(int)'a' + index] = 10 + index;
+				}
+			}
 
 			private Regex RegexHexString = new Regex("^([0-9A-Fa-f]{2})*$");
 
@@ -1602,22 +1614,12 @@ namespace Charlotte.Commons
 
 				for (int index = 0; index < dest.Length; index++)
 				{
-					int hi = To4Bit(src[index * 2 + 0]);
-					int lw = To4Bit(src[index * 2 + 1]);
+					int hi = this.HexChar2Value[(int)src[index * 2 + 0]];
+					int lw = this.HexChar2Value[(int)src[index * 2 + 1]];
 
 					dest[index] = (byte)((hi << 4) | lw);
 				}
 				return dest;
-			}
-
-			private int To4Bit(char chr)
-			{
-				int ret = HEXADECIMAL_LOWER.IndexOf(char.ToLower(chr));
-
-				if (ret == -1)
-					throw null; // never
-
-				return ret;
 			}
 		}
 
@@ -2064,7 +2066,7 @@ namespace Charlotte.Commons
 
 		public static void Batch(IList<string> commands, string workingDir = "", StartProcessWindowStyle_e winStyle = StartProcessWindowStyle_e.INVISIBLE)
 		{
-			// Batch-名は何でも良い。
+			// バッチファイル名は何でも良い。
 			// 折角なので何かの時のためにタスマネから目視で発見・判別し易い名前にしておく。
 			const string BATCH_NAME = "ChocolateCupCakeRecipe.bat";
 
