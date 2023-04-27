@@ -49,12 +49,24 @@ namespace Charlotte.Commons
 
 		private static string GetRootDir()
 		{
-			string envTMP = Environment.GetEnvironmentVariable("TMP");
+			return Path.Combine(GetTMPDir(), "Claes20200001_TMP_{8218a38a-fd91-4e58-9059-b8b906dae06f}_" + Process.GetCurrentProcess().Id);
+		}
 
-			if (string.IsNullOrEmpty(envTMP))
-				throw new Exception("Environment variable TMP is not defined");
+		private static string GetTMPDir()
+		{
+			foreach (string envName in new string[] { "TMP", "TEMP", "ProgramData" })
+			{
+				string dir = Environment.GetEnvironmentVariable(envName);
 
-			return Path.Combine(envTMP, "Claes20200001_TMP_{683426cc-d32b-485d-ad69-c4f210938f72}_" + Process.GetCurrentProcess().Id);
+				if (
+					!string.IsNullOrEmpty(dir) &&
+					SCommon.IsFairFullPath(dir) &&
+					!dir.Contains('\u0020') && !dir.Contains('\u3000') && // 空白を含まないこと。
+					Directory.Exists(dir)
+					)
+					return dir;
+			}
+			throw new Exception("Environment variable TMP is not correct");
 		}
 
 		private static ulong CtorCounter = 0;

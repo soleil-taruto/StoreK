@@ -776,28 +776,30 @@ namespace Charlotte.Commons
 			}
 		}
 
-		public const int MY_PATH_MAX = 240;
+		public const int MY_PATH_MAX = 250;
 
 		/// <summary>
 		/// 歴としたローカル名に変換する。(慣習的実装)
 		/// https://github.com/stackprobe/Factory/blob/master/Common/DataConv.c#L503-L552
 		/// </summary>
 		/// <param name="str">対象文字列(対象パス)</param>
-		/// <param name="dirSize">対象パスが存在するディレクトリのフルパスの長さ、考慮しない場合は -1 を指定すること。</param>
+		/// <param name="dirSize">対象パスが存在するディレクトリのフルパスのバイト数(1～), -1 == バイト数を考慮しない</param>
 		/// <returns>ローカル名</returns>
 		public static string ToFairLocalPath(string str, int dirSize)
 		{
 			const string CHRS_NG = "\"*/:<>?\\|";
 			const string CHR_ALT = "_";
 
+			byte[] bytes = SCommon.GetSJISBytes(str);
+
 			if (dirSize != -1)
 			{
 				int maxLen = Math.Max(0, MY_PATH_MAX - dirSize);
 
-				if (maxLen < str.Length)
-					str = str.Substring(0, maxLen);
+				if (maxLen < bytes.Length)
+					bytes = SCommon.GetPart(bytes, 0, maxLen);
 			}
-			str = SCommon.ToJString(str, true, false, false, true);
+			str = SCommon.ToJString(bytes, true, false, false, true);
 
 			string[] words = str.Split('.');
 
@@ -829,21 +831,22 @@ namespace Charlotte.Commons
 
 		public static string ToFairRelPath(string path, int dirSize)
 		{
-			string[] ptkns = SCommon.Tokenize(path, "\\/", false, true);
+			string[] pTkns = SCommon.Tokenize(path, "\\/", false, true);
 
-			if (ptkns.Length == 0)
-				ptkns = new string[] { "_" };
+			if (pTkns.Length == 0)
+				pTkns = new string[] { "_" };
 
-			for (int index = 0; index < ptkns.Length; index++)
-				ptkns[index] = ToFairLocalPath(ptkns[index], -1);
+			for (int index = 0; index < pTkns.Length; index++)
+				pTkns[index] = ToFairLocalPath(pTkns[index], -1);
 
-			path = string.Join("\\", ptkns);
+			path = string.Join("\\", pTkns);
 
 			if (dirSize != -1)
 			{
 				int maxLen = Math.Max(0, MY_PATH_MAX - dirSize);
+				byte[] bytes = SCommon.GetSJISBytes(path);
 
-				if (maxLen < path.Length)
+				if (maxLen < bytes.Length)
 					path = ToFairLocalPath(path, dirSize);
 			}
 			return path;
@@ -859,6 +862,21 @@ namespace Charlotte.Commons
 		public static bool IsFairRelPath(string path, int dirSize)
 		{
 			return ToFairRelPath(path, dirSize) == path;
+		}
+
+		public static bool IsFairFullPath(string path)
+		{
+			return IsAbsRootDir(path) || IsFairFullPathWithoutAbsRootDir(path);
+		}
+
+		public static bool IsAbsRootDir(string path)
+		{
+			return Regex.IsMatch(path, "^[A-Za-z]:\\\\$");
+		}
+
+		public static bool IsFairFullPathWithoutAbsRootDir(string path)
+		{
+			return Regex.IsMatch(path, "^[A-Za-z]:\\\\.+$") && IsFairRelPath(path.Substring(3), 3);
 		}
 
 		public static string ToCreatablePath(string path)
@@ -1140,7 +1158,7 @@ namespace Charlotte.Commons
 		public static string ToJString(string str, bool okJpn, bool okRet, bool okTab, bool okSpc)
 		{
 			if (str == null)
-				str = "";
+				str = ""; // HACK: null許容チェック廃止検討
 
 			return ToJString(GetSJISBytes(str), okJpn, okRet, okTab, okSpc);
 		}
@@ -1231,7 +1249,7 @@ namespace Charlotte.Commons
 		public static string ToJString(byte[] src, bool okJpn, bool okRet, bool okTab, bool okSpc)
 		{
 			if (src == null)
-				src = new byte[0];
+				src = EMPTY_BYTES; // HACK: null許容チェック廃止検討
 
 			using (MemoryStream dest = new MemoryStream())
 			{
@@ -2158,7 +2176,7 @@ namespace Charlotte.Commons
 			public string Encode(byte[] data)
 			{
 				if (data == null)
-					data = SCommon.EMPTY_BYTES;
+					data = SCommon.EMPTY_BYTES; // HACK: null許容チェック廃止検討
 
 				string str;
 
@@ -2217,7 +2235,7 @@ namespace Charlotte.Commons
 			public byte[] Decode(string str)
 			{
 				if (str == null)
-					str = "";
+					str = ""; // HACK: null許容チェック廃止検討
 
 				str = new string(str.Where(chr => (int)chr < CHAR_MAP_SIZE && this.CharMap[(int)chr] != -1).ToArray());
 
@@ -2308,7 +2326,7 @@ namespace Charlotte.Commons
 			public string Encode(byte[] data)
 			{
 				if (data == null)
-					data = SCommon.EMPTY_BYTES;
+					data = SCommon.EMPTY_BYTES; // HACK: null許容チェック廃止検討
 
 				return Convert.ToBase64String(data);
 			}
@@ -2322,7 +2340,7 @@ namespace Charlotte.Commons
 			public byte[] Decode(string str)
 			{
 				if (str == null)
-					str = "";
+					str = ""; // HACK: null許容チェック廃止検討
 
 				str = new string(str.Where(chr => (int)chr < CHAR_MAP_SIZE && this.CharMap[(int)chr] != -1).ToArray());
 
