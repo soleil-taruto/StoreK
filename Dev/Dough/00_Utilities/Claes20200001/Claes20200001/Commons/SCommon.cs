@@ -1158,7 +1158,7 @@ namespace Charlotte.Commons
 		public static string ToJString(string str, bool okJpn, bool okRet, bool okTab, bool okSpc)
 		{
 			if (str == null)
-				str = ""; // HACK: null許容チェック廃止検討
+				str = "";
 
 			return ToJString(GetSJISBytes(str), okJpn, okRet, okTab, okSpc);
 		}
@@ -1249,7 +1249,7 @@ namespace Charlotte.Commons
 		public static string ToJString(byte[] src, bool okJpn, bool okRet, bool okTab, bool okSpc)
 		{
 			if (src == null)
-				src = EMPTY_BYTES; // HACK: null許容チェック廃止検討
+				src = EMPTY_BYTES;
 
 			using (MemoryStream dest = new MemoryStream())
 			{
@@ -2176,7 +2176,7 @@ namespace Charlotte.Commons
 			public string Encode(byte[] data)
 			{
 				if (data == null)
-					data = SCommon.EMPTY_BYTES; // HACK: null許容チェック廃止検討
+					data = SCommon.EMPTY_BYTES;
 
 				string str;
 
@@ -2235,7 +2235,7 @@ namespace Charlotte.Commons
 			public byte[] Decode(string str)
 			{
 				if (str == null)
-					str = ""; // HACK: null許容チェック廃止検討
+					str = "";
 
 				str = new string(str.Where(chr => (int)chr < CHAR_MAP_SIZE && this.CharMap[(int)chr] != -1).ToArray());
 
@@ -2326,7 +2326,7 @@ namespace Charlotte.Commons
 			public string Encode(byte[] data)
 			{
 				if (data == null)
-					data = SCommon.EMPTY_BYTES; // HACK: null許容チェック廃止検討
+					data = SCommon.EMPTY_BYTES;
 
 				return Convert.ToBase64String(data);
 			}
@@ -2340,7 +2340,7 @@ namespace Charlotte.Commons
 			public byte[] Decode(string str)
 			{
 				if (str == null)
-					str = ""; // HACK: null許容チェック廃止検討
+					str = "";
 
 				str = new string(str.Where(chr => (int)chr < CHAR_MAP_SIZE && this.CharMap[(int)chr] != -1).ToArray());
 

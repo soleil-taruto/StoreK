@@ -66,7 +66,7 @@ namespace Charlotte.Commons
 					)
 					return dir;
 			}
-			throw new Exception("Environment variable TMP is not correct");
+			throw new Exception("Environment variables TMP, TEMP, and ProgramData are incorrect");
 		}
 
 		private static ulong CtorCounter = 0;
