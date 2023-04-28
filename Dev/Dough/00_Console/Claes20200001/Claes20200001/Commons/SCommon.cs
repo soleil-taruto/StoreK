@@ -829,6 +829,13 @@ namespace Charlotte.Commons
 			return str;
 		}
 
+		/// <summary>
+		/// 歴とした相対パス名に変換する。(慣習的実装)
+		/// https://github.com/stackprobe/Factory/blob/master/Common/DataConv.c#L571-L593
+		/// </summary>
+		/// <param name="path">対象文字列(対象パス)</param>
+		/// <param name="dirSize">対象パスが存在するディレクトリのフルパスのバイト数(1～), -1 == バイト数を考慮しない</param>
+		/// <returns>相対パス名</returns>
 		public static string ToFairRelPath(string path, int dirSize)
 		{
 			string[] pTkns = SCommon.Tokenize(path, "\\/", false, true);

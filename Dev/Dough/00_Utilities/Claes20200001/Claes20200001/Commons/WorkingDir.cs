@@ -49,7 +49,11 @@ namespace Charlotte.Commons
 
 		private static string GetRootDir()
 		{
-			return Path.Combine(GetTMPDir(), "Claes20200001_TMP_{8218a38a-fd91-4e58-9059-b8b906dae06f}_" + Process.GetCurrentProcess().Id);
+			string dirTMP = GetTMPDir();
+			long timeStamp = SCommon.SimpleDateTime.Now().ToTimeStamp();
+			string uuid = Guid.NewGuid().ToString("B");
+
+			return Path.Combine(dirTMP, "Claes20200001_TMP_" + timeStamp + "_" + uuid);
 		}
 
 		private static string GetTMPDir()
