@@ -582,5 +582,26 @@ namespace Charlotte.Utilities
 		{
 			return this.SetMargin(matchOuter, outerColor, margin, margin, margin, margin);
 		}
+
+		/// <summary>
+		/// 時計回りに90度回転する。
+		/// </summary>
+		/// <returns>新しいキャンバス</returns>
+		public Canvas Rotate90()
+		{
+			ProcMain.WriteLog("Canvas-Rotate-90-ST");
+
+			Canvas dest = new Canvas(this.H, this.W);
+
+			for (int x = 0; x < this.W; x++)
+			{
+				for (int y = 0; y < this.H; y++)
+				{
+					dest[this.H - y - 1, x] = this[x, y];
+				}
+			}
+			ProcMain.WriteLog("Canvas-Rotate-90-ED");
+			return dest;
+		}
 	}
 }
