@@ -54,7 +54,7 @@ namespace Charlotte.Tests
 				if (xmlPaths[1] != "Root/Parent") throw null;
 				if (xmlPaths[2] != "Root/Parent/AttributeTest") throw null;
 			}
-			Console.WriteLine("OK!");
+			Console.WriteLine("OK! (TEST-0012-01)");
 		}
 	}
 }

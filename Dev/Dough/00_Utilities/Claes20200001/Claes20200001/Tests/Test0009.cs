@@ -18,6 +18,8 @@ namespace Charlotte.Tests
 			Test01_a("AB");
 			Test01_a("ABC");
 			Test01_a("Wikipedia"); // -> 11E60398 hex @ https://ja.wikipedia.org/wiki/Adler-32
+
+			Console.WriteLine("OK! (TEST-0009-01)");
 		}
 
 		private void Test01_a(string input)

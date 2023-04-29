@@ -26,6 +26,8 @@ namespace Charlotte.Tests
 
 		private void Test01_a(int testCount, int scale)
 		{
+			Console.WriteLine(string.Join(", ", "TEST-0013-01", testCount, scale));
+
 			for (int testcnt = 0; testcnt < testCount; testcnt++)
 			{
 				byte[] testData = SCommon.CRandom.GetBytes(SCommon.CRandom.GetInt(scale));

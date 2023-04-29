@@ -134,9 +134,13 @@ namespace Charlotte.GameCommons
 
 			if (ProcMain.DEBUG)
 			{
+#if DEBUG
 				logSaveDir = @"C:\temp";
 				logFile = @"C:\temp\Game.log";
 				saveDataFile = @"C:\temp\SaveData.dat";
+#else
+				throw new Exception("DEBUG is True");
+#endif
 			}
 			else
 			{

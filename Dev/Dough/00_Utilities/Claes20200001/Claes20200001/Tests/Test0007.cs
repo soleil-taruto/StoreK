@@ -32,6 +32,8 @@ namespace Charlotte.Tests
 			{
 				bits[long.MaxValue] = true;
 			});
+
+			Console.WriteLine("OK! (TEST-0007-01)");
 		}
 	}
 }

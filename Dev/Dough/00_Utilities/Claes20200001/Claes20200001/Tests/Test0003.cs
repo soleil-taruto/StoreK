@@ -30,7 +30,7 @@ namespace Charlotte.Tests
 			for (int testcnt = 0; testcnt < 10; testcnt++)
 				Test01_a(SCommon.CRandom.GetRange(100000, 1000000));
 
-			ProcMain.WriteLog("OK!");
+			ProcMain.WriteLog("OK! (TEST-0003-01)");
 		}
 
 		private void Test01_a(int size)

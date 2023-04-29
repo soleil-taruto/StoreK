@@ -18,6 +18,8 @@ namespace Charlotte.Tests
 			Test01a("https://www.google.com");
 			Test01a("https://www.youtube.com");
 			Test01a("https://www.amazon.co.jp");
+
+			ProcMain.WriteLog("OK! (TEST-0004-01)");
 		}
 
 		/// <summary>

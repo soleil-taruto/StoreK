@@ -18,7 +18,7 @@ namespace Charlotte.Tests
 			Test01_a(100, 100);
 			Test01_a(1000, 10);
 
-			Console.WriteLine("OK!");
+			Console.WriteLine("OK! (TEST-0008-01)");
 		}
 
 		public void Test01_a(int testDataScale, int testCount)
@@ -78,7 +78,7 @@ namespace Charlotte.Tests
 			Test02_a(3000, 300);
 			Test02_a(10000, 100);
 
-			Console.WriteLine("OK!");
+			Console.WriteLine("OK! (TEST-0008-02)");
 		}
 
 		public void Test02_a(int testDataScale, int testCount)

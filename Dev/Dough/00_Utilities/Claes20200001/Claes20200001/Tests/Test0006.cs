@@ -21,7 +21,7 @@ namespace Charlotte.Tests
 			{
 				for (int y = 1; y <= 9999; y++)
 				{
-					if (y % 100 == 0) Console.WriteLine(y); // cout
+					if (y % 100 == 0) Console.WriteLine(string.Join(", ", "TEST-0006-01", y)); // cout
 
 					for (int m = 1; m <= 12; m++)
 					{
@@ -38,6 +38,7 @@ namespace Charlotte.Tests
 					}
 				}
 			}
+			Console.WriteLine("OK!");
 		}
 
 		public void Test02()
@@ -78,6 +79,10 @@ namespace Charlotte.Tests
 			Test02_a(int.MaxValue - 2);
 			Test02_a(int.MaxValue - 1);
 			Test02_a(int.MaxValue);
+
+			// ----
+
+			Console.WriteLine("OK! (TEST-0006-02)");
 		}
 
 		private void Test02_a(int ymd)
@@ -100,7 +105,7 @@ namespace Charlotte.Tests
 		{
 			for (int y = 1; y <= 9999; y++)
 			{
-				if (y % 100 == 0) Console.WriteLine(y); // cout
+				if (y % 100 == 0) Console.WriteLine(string.Join(", ", "TEST-0006-03", y)); // cout
 
 				for (int m = 1; m <= 12; m++)
 				{
@@ -119,6 +124,7 @@ namespace Charlotte.Tests
 					}
 				}
 			}
+			Console.WriteLine("OK!");
 		}
 	}
 }

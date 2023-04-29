@@ -25,7 +25,7 @@ namespace Charlotte.Tests
 
 		private void Test01_a(int testCount, ulong scale)
 		{
-			Console.WriteLine(testCount + ", " + scale); // cout
+			Console.WriteLine(string.Join(", ", "TEST-0010-01", testCount, scale)); // cout
 
 			int countOfPrime = 0;
 
@@ -42,7 +42,8 @@ namespace Charlotte.Tests
 				if (ans1)
 					countOfPrime++;
 			}
-			Console.WriteLine("OK " + countOfPrime);
+			Console.WriteLine(countOfPrime);
+			Console.WriteLine("OK");
 		}
 
 		private bool Test01_b1(ulong n)
@@ -133,7 +134,7 @@ namespace Charlotte.Tests
 					break;
 			}
 
-			Console.WriteLine("OK!");
+			Console.WriteLine("OK! (TEST-0010-02)");
 		}
 	}
 }

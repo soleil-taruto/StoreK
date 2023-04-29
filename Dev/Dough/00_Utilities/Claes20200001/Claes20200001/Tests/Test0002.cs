@@ -27,7 +27,7 @@ namespace Charlotte.Tests
 			for (int testcnt = 0; testcnt < 30; testcnt++)
 				Test01_a(SCommon.CRandom.GetRange(100000, 3000000));
 
-			ProcMain.WriteLog("OK!");
+			ProcMain.WriteLog("OK! (TEST-0002-01)");
 		}
 
 		private void Test01_a(int size)
@@ -96,7 +96,7 @@ namespace Charlotte.Tests
 				Test02_b();
 				Test02_c();
 			}
-			ProcMain.WriteLog("OK!");
+			ProcMain.WriteLog("OK! (TEST-0002-02)");
 		}
 
 		private void Test02_b()

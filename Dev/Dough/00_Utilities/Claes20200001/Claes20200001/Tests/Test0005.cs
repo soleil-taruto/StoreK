@@ -17,6 +17,8 @@ namespace Charlotte.Tests
 		/// </summary>
 		public void Test01()
 		{
+			ProcMain.WriteLog("TEST-0005-01");
+
 			HTTPServer hs = new HTTPServer()
 			{
 				PortNo = 80,
@@ -64,6 +66,8 @@ namespace Charlotte.Tests
 
 		public void Test02()
 		{
+			ProcMain.WriteLog("TEST-0005-02");
+
 			HTTPServer hs = new HTTPServer()
 			{
 				HTTPConnected = channel =>
@@ -105,6 +109,8 @@ namespace Charlotte.Tests
 
 		public void Test03()
 		{
+			ProcMain.WriteLog("TEST-0005-03");
+
 			HTTPServer hs = new HTTPServer()
 			{
 				HTTPConnected = channel =>

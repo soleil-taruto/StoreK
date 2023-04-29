@@ -80,7 +80,7 @@ namespace Charlotte.Tests
 				}
 			}
 
-			ProcMain.WriteLog("OK!");
+			ProcMain.WriteLog("OK! (TEST-0001-01)");
 		}
 
 		#region TestVector

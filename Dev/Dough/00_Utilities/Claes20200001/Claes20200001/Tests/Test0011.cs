@@ -19,7 +19,7 @@ namespace Charlotte.Tests
 			Test01_a(Encoding.Unicode);
 			Test01_a(Encoding.UTF32);
 
-			Console.WriteLine("OK!");
+			Console.WriteLine("OK! (TEST-0011-01)");
 		}
 
 		private void Test01_a(Encoding encoding)
